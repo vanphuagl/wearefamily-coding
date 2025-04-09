@@ -1,5 +1,14 @@
 /* Utils
 ------------------------------------------------------------*/
+/* lang */
+.lang-ja .lang-en,
+.lang-en .lang-ja {
+  display: none;
+}
+.lang-ja .lang-ja,
+.lang-en .lang-en {
+  display: block;
+}
 
 /* padding */
 .u-pad {

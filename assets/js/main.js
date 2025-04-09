@@ -7,6 +7,8 @@ const init = () => {
     appHeight();
     // # init loading
     initLoading();
+    // # init language switch
+    initLanguageSwitch();
     // # lazy load
     const ll = new LazyLoad({
         threshold: 0,
@@ -101,6 +103,61 @@ const swiperMainvisual = new Swiper("[data-mainvisual-swiper]", {
         }
     }
 });
+
+// ===== switch language =====
+const initLanguageSwitch = function(options = {}) {
+    // Default configuration
+    const defaults = {
+        defaultLang: 'ja', // Default language
+        switcherSelector: '.c-header_lang', // Container selector
+        buttonSelector: '.c-header_lang li', // Button selector
+        langAttribute: 'data-lang', // Attribute that identifies the language
+        activeClass: '--active', // Class that marks the selected button
+        rootElement: document.documentElement // Element to add class to (default is <html>)
+    };
+    // Combine options with defaults
+    const config = { ...defaults, ...options };
+
+    // Restore language from localStorage (if available)
+    const savedLang = localStorage.getItem('language') || config.defaultLang;
+    config.rootElement.classList.add(`lang-${savedLang}`);
+    config.rootElement.lang = savedLang;
+
+    // Find the language switch buttons
+    const buttons = document.querySelectorAll(config.buttonSelector);
+    if (!buttons.length) {
+        console.warn('No language switcher buttons found with selector:', config.buttonSelector);
+        return;
+    }
+
+    // Set initial --active state based on savedLang
+    buttons.forEach(button => {
+        const lang = button.getAttribute(config.langAttribute);
+        if (lang === savedLang) {
+            button.classList.add(config.activeClass);
+        } else {
+            button.classList.remove(config.activeClass);
+        }
+    });
+
+    // Handle clicks for buttons
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const lang = button.getAttribute(config.langAttribute);
+            if (!lang) return;
+            // Remove class --active from all buttons
+            buttons.forEach(btn => btn.classList.remove(config.activeClass));
+            // Add class --active to the clicked button
+            button.classList.add(config.activeClass);
+            // Remove old language classes and add new ones
+            config.rootElement.classList.remove('lang-ja', 'lang-en');
+            config.rootElement.classList.add(`lang-${lang}`);
+            config.rootElement.lang = lang;
+            // Save language to localStorage
+            localStorage.setItem('language', lang);
+        });
+    });
+}
 
 // ### ===== DOMCONTENTLOADED ===== ###
 window.addEventListener("DOMContentLoaded", init);
