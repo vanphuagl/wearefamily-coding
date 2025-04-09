@@ -1,7 +1,16 @@
 /* Utils
 ------------------------------------------------------------*/
-/* only device */
 
+/* padding */
+.u-pad {
+  padding: 0 40px;
+
+  @include maxW(1023px) {
+    padding: 0 20px;
+  }
+}
+
+/* only device */
 .sp-only,
 .is-hidden {
   display: none !important;

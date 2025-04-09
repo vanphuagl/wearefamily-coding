@@ -33,6 +33,8 @@ const lenis = new Lenis({
     touchMultiplier: 2.5,
     smoothTouch: true,
     direction: 'vertical'
+    // lerp: 0.05,
+    // smoothWheel: true,
 });
 function raf(time) {
     if (!isLoading) {
@@ -71,7 +73,7 @@ const initLoading = async () => {
     const playerJincup = document.getElementById("e7DApHFhQti1").svgatorPlayer;
     await playWithPromise(playerJincup);
     // # step 2
-    await delay(800);
+    await delay(600);
     document.querySelector("[data-loading]").classList.add("--done");
     // -- Remove scroll event blocker and re-enable Lenis
     window.removeEventListener('wheel', preventScroll);

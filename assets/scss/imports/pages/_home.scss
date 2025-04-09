@@ -90,6 +90,12 @@
       height: calc((var(--app-height) * 1.4) - 1px);
     }
   }
+  [data-offset-bottom] {
+    width: 100vw;
+    height: var(--app-height);
+    background: transparent;
+    pointer-events: none;
+  }
 
   .wrapper {
     position: relative;
@@ -100,7 +106,83 @@
     background: $main-bg-cl;
   }
 
-  .top {
-    height: 200vh;
+  // ===== preface =====
+  .preface {
+    &_title {
+      position: sticky;
+      top: 0;
+      .c-title {
+        position: absolute;
+        top: 35px;
+      }
+
+      @include maxW(1023px) {
+        position: relative;
+        .c-title {
+          top: 20px;
+        }
+      }
+    }
+
+    &_entry {
+      padding-top: 250px;
+      width: 66.67vw;
+      margin-left: auto;
+
+      @include maxW(1023px) {
+        padding-top: 200px;
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
+
+    &_content {
+      p {
+        font-size: 2.4rem;
+        letter-spacing: -0.48px;
+        line-height: 2;
+        text-align: justify;
+        margin-bottom: 58px;
+
+        &:last-child {
+          margin-bottom: initial;
+        }
+      }
+
+      @include maxW(1023px) {
+        p {
+          font-size: 1.6rem;
+          letter-spacing: -0.32px;
+          line-height: 1.94;
+          margin-bottom: 32px;
+        }
+      }
+    }
+
+    &_sign {
+      margin-top: 108px;
+      font-size: 2.2rem;
+      letter-spacing: -0.44px;
+      line-height: 1.86;
+      text-align: right;
+
+      @include maxW(1023px) {
+        margin-top: 72px;
+        font-size: 1.4rem;
+        letter-spacing: -0.28px;
+        line-height: 1.79;
+      }
+    }
+  }
+
+  // ===== profile =====
+  .profile {
+    &_container {
+      padding-top: 200px;
+
+      @include maxW(1023px) {
+        padding-top: 120px;
+      } 
+    }
   }
 }
