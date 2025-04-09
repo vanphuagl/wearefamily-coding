@@ -1,0 +1,18 @@
+/* Utils
+------------------------------------------------------------*/
+/* only device */
+
+.sp-only,
+.is-hidden {
+  display: none !important;
+}
+
+@include maxW(1023px) {
+  .pc-only {
+    display: none !important;
+  }
+
+  .sp-only {
+    display: block !important;
+  }
+}
