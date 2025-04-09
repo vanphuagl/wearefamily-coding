@@ -81,6 +81,7 @@ const initLoading = async () => {
     isLoading = false;
     // # step 3
     await delay(600);
+    document.getElementById("ekAYG69cqyn1").svgatorPlayer.play();
     swiperMainvisual.autoplay.start();
 }
 
