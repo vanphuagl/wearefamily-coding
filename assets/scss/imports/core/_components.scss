@@ -61,6 +61,16 @@
   display: flex;
   gap: 15px;
 
+  &.--white-cl {
+    p {
+      color: $white-cl;
+    }
+
+    span {
+      background: $white-cl;
+    }
+  }
+
   p {
     font-size: 1.8rem;
     letter-spacing: -1.08px;

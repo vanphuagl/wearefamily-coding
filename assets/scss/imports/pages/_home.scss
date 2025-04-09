@@ -28,6 +28,7 @@
       background: $black-cl;
       opacity: 0.3;
       z-index: 1;
+      pointer-events: none;
     }
 
     &_swiper {
@@ -96,8 +97,7 @@
     background: transparent;
     pointer-events: none;
   }
-
-  .wrapper {
+  [data-wrapper] {
     position: relative;
     width: 100%;
     height: 100%;
@@ -182,7 +182,33 @@
 
       @include maxW(1023px) {
         padding-top: 120px;
-      } 
+      }
+    }
+
+    &_inner {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background-color: $black-cl;
+    }
+
+    &_overlay {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: $black-cl;
+      opacity: 0.4;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &_title {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      z-index: 1;
     }
   }
 }
