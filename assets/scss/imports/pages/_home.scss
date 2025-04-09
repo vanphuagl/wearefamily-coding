@@ -3,7 +3,63 @@
 /* -------------------------------------------------------------------------- */
 
 .wafpage {
-    .top {
-        height: 200vh;
+  // ====== mainvisual =====
+  .mainvisual {
+    &_container {
+      width: 100%;
+      height: calc(var(--app-height) * 2);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+
+      @include maxW(1023px) {
+        height: calc((var(--app-height) * 1.4) - 1px);
+      }
     }
+
+    &_overlay {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: $black-cl;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    &_swiper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  // ====== wrapper ======
+  [data-offset-top] {
+    width: 100vw;
+    height: calc(var(--app-height) * 2);
+    background: transparent;
+    pointer-events: none;
+
+    @include maxW(1023px) {
+      height: calc((var(--app-height) * 1.4) - 1px);
+    }
+  }
+
+  .wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 1px;
+    z-index: 2;
+    background: $main-bg-cl;
+  }
+
+  .top {
+    height: 200vh;
+  }
 }

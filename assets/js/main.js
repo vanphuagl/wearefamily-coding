@@ -24,6 +24,7 @@ const appHeight = () => {
 window.addEventListener("resize", appHeight);
 
 // ===== lenis =====
+let isLoading = true;
 const lenis = new Lenis({
     duration: 0.8,
     easing: (t) => 1 - Math.pow(1 - t, 3),
@@ -32,19 +33,20 @@ const lenis = new Lenis({
     touchMultiplier: 2.5,
     smoothTouch: true,
     direction: 'vertical'
-    // lerp: 0.05,
-    // smoothWheel: true,
 });
-lenis.on("scroll", () => { });
 function raf(time) {
-    lenis.raf(time);
+    if (!isLoading) {
+        lenis.raf(time);
+    } else {
+        lenis.scrollTo(0, { immediate: true }); // Keep scroll position at 0 while loading
+    }
     requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
 
 // ===== init loading =====
+const preventScroll = (e) => e.preventDefault();
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 const playWithPromise = (player) => {
     return new Promise((resolve) => {
         // When the animation ends, resolve Promise
@@ -53,9 +55,17 @@ const playWithPromise = (player) => {
         player.play();
     });
 };
-
 const initLoading = async () => {
-    lenis.stop();
+    // Block scroll events
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+    window.addEventListener('scroll', preventScroll, { passive: false });
+    window.addEventListener('keydown', (e) => {
+        if ([32, 37, 38, 39, 40].includes(e.keyCode)) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    window.scrollTo(0, 0);
     // # step 1
     await delay(1000);
     const playerJincup = document.getElementById("e7DApHFhQti1").svgatorPlayer;
@@ -63,9 +73,31 @@ const initLoading = async () => {
     // # step 2
     await delay(800);
     document.querySelector("[data-loading]").classList.add("--done");
+    // -- Remove scroll event blocker and re-enable Lenis
+    window.removeEventListener('wheel', preventScroll);
+    window.removeEventListener('touchmove', preventScroll);
+    window.removeEventListener('scroll', preventScroll);
+    window.removeEventListener('keydown', preventScroll);
+    isLoading = false;
+    // # step 3
     await delay(600);
-    lenis.start();
+    swiperMainvisual.autoplay.start();
 }
+
+// ===== mainvisual swiper ======
+const swiperMainvisual = new Swiper("[data-mainvisual-swiper]", {
+    effect: "fade",
+    speed: 2500,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false
+    },
+    on: {
+        init: function () {
+            this.autoplay.stop();
+        }
+    }
+});
 
 // ### ===== DOMCONTENTLOADED ===== ###
 window.addEventListener("DOMContentLoaded", init);

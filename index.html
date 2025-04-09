@@ -101,29 +101,75 @@
     </div>
     <!-- @@loading -->
 
-    <!-- @header -->
-    <header class="c-header">
-        <div class="c-header_container"></div>
-    </header>
-    <!-- @@header -->
-
-    <!-- @main -->
-    <main class="wafpage">
-        <!-- top// -->
-        <section class="top">
-            <div class="top_container">
-                <h2>have a nice day!!</h2>
+    <!-- @wrapper -->
+    <div class="wafpage">
+        <!-- mainvisual// -->
+        <div class="mainvisual">
+            <div class="mainvisual_container">
+                <div class="mainvisual_swiper" data-mainvisual-swiper>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <picture>
+                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_01_sp.webp">
+                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_01.webp"
+                                    alt="WE ARE FAMILY" width="1440" height="779">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_02_sp.webp">
+                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_02.webp"
+                                    alt="WE ARE FAMILY" width="1440" height="779">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_03_sp.webp">
+                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_03.webp"
+                                    alt="WE ARE FAMILY" width="1440" height="779">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_04_sp.webp">
+                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_04.webp"
+                                    alt="WE ARE FAMILY" width="1440" height="779">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+                <div class="mainvisual_overlay"></div>
             </div>
-        </section>
-        <!-- //top -->
-    </main>
-    <!-- @@main -->
+        </div>
+        <!-- //mainvisual -->
 
-    <!-- @footer -->
-    <footer class="c-footer">
-        <div class="c-footer_container"></div>
-    </footer>
-    <!-- @@footer -->
+        <!-- ## -->
+        <div data-offset-top></div>
+        <!-- ## -->
+
+        <div class="wrapper">
+            <!-- header// -->
+            <header class="c-header">
+                <div class="c-header_container"></div>
+            </header>
+            <!-- //header -->
+            <main>
+                <!-- top// -->
+                <section class="top">
+                    <div class="top_container">
+                        <h2>have a nice day!!</h2>
+                    </div>
+                </section>
+                <!-- //top -->
+            </main>
+            <!-- footer -->
+            <footer class="c-footer">
+                <div class="c-footer_container"></div>
+            </footer>
+            <!-- //footer -->
+        </div>
+    </div>
+    <!-- @@wrapper -->
 
     <!-- @script -->
     <script src="/assets/js/svgator.js"></script>
