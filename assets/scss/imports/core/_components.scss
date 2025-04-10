@@ -59,6 +59,7 @@
 .c-title {
   width: fit-content;
   display: flex;
+  align-items: center;
   gap: 15px;
 
   &.--white-cl {
@@ -78,7 +79,7 @@
 
   span {
     width: 1px;
-    height: auto;
+    height: 18px;
     background: $black-cl;
   }
 
@@ -88,6 +89,10 @@
     p {
       font-size: 1.4rem;
       letter-spacing: -0.84px;
+    }
+
+    span {
+      height: 15px;
     }
   }
 }

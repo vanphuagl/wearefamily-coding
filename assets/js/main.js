@@ -12,6 +12,7 @@ const init = () => {
   // # lazy load
   const ll = new LazyLoad({
     threshold: 0,
+    elements_selector: ".lazy",
   });
 };
 
@@ -28,13 +29,15 @@ window.addEventListener("resize", appHeight);
 // ===== lenis =====
 let isLoading = true;
 const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  duration: 1.0,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(1 - t, 2.5)),
   smooth: true,
+  mouseMultiplier: 1.0,
   smoothTouch: true,
-  wheelMultiplier: 1,
-  touchMultiplier: 2,
+  touchMultiplier: 1.5,
   infinite: false,
+  direction: 'vertical',
+  gestureDirection: 'vertical',
 });
 function raf(time) {
   if (!isLoading) {
@@ -181,12 +184,77 @@ const [header, footer] = [
   document.querySelector("header"),
   document.querySelector("footer"),
 ];
-lenis.on("scroll", ({}) => {
+lenis.on("scroll", ({ }) => {
   const distInView = footer.getBoundingClientRect().top - 100;
   if (distInView < 0) {
     header.classList.add("--hidden");
   } else {
     header.classList.remove("--hidden");
+  }
+});
+
+// ===== hover table of contents =====
+
+const [tocList, tocItems, tocImage] = [
+  document.querySelector("[data-toc-list]"),
+  document.querySelectorAll("[data-toc-items]"),
+  document.querySelector("[data-toc-image]")
+]
+// object to store loaded images (cache)
+const defaultImageSrc = tocImage.getAttribute('data-src');
+const imageCache = {};
+imageCache[defaultImageSrc] = true; // Add default image to cache
+
+const changeImageWithFade = function (newSrc) {
+  tocImage.parentNode.classList.add('--fade');
+  setTimeout(() => {
+    tocImage.src = newSrc;
+    // save to cache when image loaded
+    tocImage.addEventListener('load', () => {
+      tocImage.parentNode.classList.remove('--fade');
+    }, { once: true });
+    // error image loaded
+    tocImage.addEventListener('error', () => {
+      console.error(`Failed to load image: ${newSrc}`);
+      tocImage.src = defaultImageSrc;
+      tocImage.parentNode.classList.remove('--fade');
+      imageCache[defaultImageSrc] = true;
+    }, { once: true });
+  }, 0); // 300 transiton 0.3s
+}
+
+// # mouseover li
+tocItems.forEach(item => {
+  item.addEventListener('mouseover', () => {
+    // change image
+    const imageSrc = item.getAttribute('data-toc-img');
+    if (imageCache[imageSrc]) {
+      changeImageWithFade(imageSrc);
+    } else {
+      changeImageWithFade(imageSrc);
+      // save to cache when image loaded
+      tocImage.addEventListener('load', () => {
+        imageCache[imageSrc] = true;
+      }, { once: true });
+    }
+    // set opacity
+    tocItems.forEach(otherItem => {
+      if (otherItem !== item) {
+        otherItem.style.opacity = '0.2';
+      } else {
+        otherItem.style.opacity = '1';
+      }
+    });
+  });
+});
+
+// # mouseout li
+tocList.addEventListener('mouseout', (e) => {
+  if (!tocList.contains(e.relatedTarget)) {
+    changeImageWithFade(defaultImageSrc);
+    tocItems.forEach(item => {
+      item.style.opacity = '1';
+    });
   }
 });
 
