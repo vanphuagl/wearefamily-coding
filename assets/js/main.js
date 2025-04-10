@@ -81,7 +81,7 @@ const initLoading = async () => {
   await playWithPromise(playerJincup);
   // # step 2
   await delay(600);
-  document.querySelector("[data-loading]").classList.add("--done");
+  document.querySelector("[data-loading]").classList.add("is-done");
   // -- Remove scroll event blocker and re-enable Lenis
   window.removeEventListener("wheel", preventScroll);
   window.removeEventListener("touchmove", preventScroll);
@@ -117,7 +117,7 @@ const initLanguageSwitch = function (options = {}) {
     switcherSelector: ".c-header_lang", // Container selector
     buttonSelector: ".c-header_lang li", // Button selector
     langAttribute: "data-lang", // Attribute that identifies the language
-    activeClass: "--active", // Class that marks the selected button
+    activeClass: "is-active", // Class that marks the selected button
     rootElement: document.documentElement, // Element to add class to (default is <html>)
   };
   // Combine options with defaults
@@ -138,7 +138,7 @@ const initLanguageSwitch = function (options = {}) {
     return;
   }
 
-  // Set initial --active state based on savedLang
+  // Set initial is-active state based on savedLang
   buttons.forEach((button) => {
     const lang = button.getAttribute(config.langAttribute);
     if (lang === savedLang) {
@@ -153,9 +153,9 @@ const initLanguageSwitch = function (options = {}) {
     button.addEventListener("click", () => {
       const lang = button.getAttribute(config.langAttribute);
       if (!lang) return;
-      // Remove class --active from all buttons
+      // Remove class is-active from all buttons
       buttons.forEach((btn) => btn.classList.remove(config.activeClass));
-      // Add class --active to the clicked button
+      // Add class is-active to the clicked button
       button.classList.add(config.activeClass);
       // Remove old language classes and add new ones
       config.rootElement.classList.remove("lang-ja", "lang-en");
@@ -187,51 +187,48 @@ const [header, footer] = [
 lenis.on("scroll", ({ }) => {
   const distInView = footer.getBoundingClientRect().top - 100;
   if (distInView < 0) {
-    header.classList.add("--hidden");
+    header.classList.add("is-hidden");
   } else {
-    header.classList.remove("--hidden");
+    header.classList.remove("is-hidden");
   }
 });
 
 // ===== hover table of contents =====
 
+let activeItem = null;
 const [tocList, tocItems, tocImage] = [
   document.querySelector("[data-toc-list]"),
   document.querySelectorAll("[data-toc-items]"),
   document.querySelector("[data-toc-image]")
 ]
-// object to store loaded images (cache)
 const defaultImageSrc = tocImage.getAttribute('data-src');
-const imageCache = {};
-imageCache[defaultImageSrc] = true; // Add default image to cache
-
-let activeItem = null;
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 const isMobile = 1023;
 
 const changeImageWithFade = function (newSrc) {
-  tocImage.parentNode.classList.add('--fade');
+  const currentSrc = new URL(tocImage.src, window.location.origin).href;
+  const newSrcNormalized = new URL(newSrc, window.location.origin).href;
+  if (currentSrc === newSrcNormalized) {
+    return;
+  }
+  tocImage.parentNode.classList.add('is-fade');
   setTimeout(() => {
     tocImage.src = newSrc;
-    // save to cache when image loaded
     tocImage.addEventListener('load', () => {
-      tocImage.parentNode.classList.remove('--fade');
+      tocImage.parentNode.classList.remove('is-fade');
     }, { once: true });
-    // error image loaded
     tocImage.addEventListener('error', () => {
       console.error(`Failed to load image: ${newSrc}`);
       tocImage.src = defaultImageSrc;
-      tocImage.parentNode.classList.remove('--fade');
-      imageCache[defaultImageSrc] = true;
+      tocImage.parentNode.classList.remove('is-fade');
     }, { once: true });
-  }, 0); // 300 transiton 0.3s
+  }, 300); // transiton 0.3s
 }
 
 const resetToDefault = function () {
   changeImageWithFade(defaultImageSrc);
   tocItems.forEach(item => {
     item.style.opacity = '1';
-    item.classList.remove('active');
+    item.classList.remove('is-active');
   });
   activeItem = null;
 }
@@ -244,46 +241,35 @@ const handleInteraction = function (item) {
   }
   // change image
   const imageSrc = item.getAttribute('data-toc-img');
-  if (imageCache[imageSrc]) {
-    changeImageWithFade(imageSrc);
-  } else {
-    changeImageWithFade(imageSrc);
-    // save to cache when image loaded
-    tocImage.addEventListener('load', () => {
-      imageCache[imageSrc] = true;
-    }, { once: true });
-  }
+  changeImageWithFade(imageSrc);
   // set opacity
   tocItems.forEach(otherItem => {
     if (otherItem !== item) {
       otherItem.style.opacity = '0.2';
-      otherItem.classList.remove('active');
+      otherItem.classList.remove('is-active');
     } else {
       otherItem.style.opacity = '1';
-      otherItem.classList.add('active');
+      otherItem.classList.add('is-active');
     }
   });
   activeItem = item;
 }
-
 // Handling when interacting
 tocItems.forEach(item => {
   if (window.innerWidth <= isMobile) {
-    // On mobile, using click
     item.addEventListener('click', (e) => {
       e.preventDefault();
       handleInteraction(item);
     });
   } else {
-    // On dekstop, using hover
     item.addEventListener('mouseover', () => {
       handleInteraction(item);
     });
   }
 });
 // Handling when not interacting
+// On mobile, click outside of ul to reset
 if (window.innerWidth <= isMobile) {
-  // On mobile, click outside of ul to reset
   document.addEventListener('click', (e) => {
     if (!tocList.contains(e.target)) {
       resetToDefault();
@@ -291,9 +277,7 @@ if (window.innerWidth <= isMobile) {
   });
 } else {
   tocList.addEventListener('mouseout', (e) => {
-    if (!tocList.contains(e.relatedTarget)) {
-      resetToDefault();
-    }
+    resetToDefault();
   });
 }
 

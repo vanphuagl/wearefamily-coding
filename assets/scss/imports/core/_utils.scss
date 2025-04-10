@@ -29,9 +29,16 @@
   }
 }
 
+/* keyframes */
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+  }
+}
+
 /* only device */
 .sp-only,
-.is-hidden {
+.u-hidden {
   display: none !important;
 }
 
