@@ -110,29 +110,29 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <picture>
-                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_01_sp.webp">
-                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_01.webp"
+                                <source media="(max-width: 1023px)" data-srcset="/assets/img/mainvisual_01_sp.webp">
+                                <img class="lazy" draggable="false" data-src="/assets/img/mainvisual_01.webp"
                                     alt="WE ARE FAMILY" width="1440" height="779">
                             </picture>
                         </div>
                         <div class="swiper-slide">
                             <picture>
-                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_02_sp.webp">
-                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_02.webp"
+                                <source media="(max-width: 1023px)" data-srcset="/assets/img/mainvisual_02_sp.webp">
+                                <img class="lazy" draggable="false" data-src="/assets/img/mainvisual_02.webp"
                                     alt="WE ARE FAMILY" width="1440" height="779">
                             </picture>
                         </div>
                         <div class="swiper-slide">
                             <picture>
-                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_03_sp.webp">
-                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_03.webp"
+                                <source media="(max-width: 1023px)" data-srcset="/assets/img/mainvisual_03_sp.webp">
+                                <img class="lazy" draggable="false" data-src="/assets/img/mainvisual_03.webp"
                                     alt="WE ARE FAMILY" width="1440" height="779">
                             </picture>
                         </div>
                         <div class="swiper-slide">
                             <picture>
-                                <source media="(max-width: 1023px)" data-src="/assets/img/top/mainvisual_04_sp.webp">
-                                <img class="lazy" draggable="false" src="/assets/img/mainvisual_04.webp"
+                                <source media="(max-width: 1023px)" data-srcset="/assets/img/mainvisual_04_sp.webp">
+                                <img class="lazy" draggable="false" data-src="/assets/img/mainvisual_04.webp"
                                     alt="WE ARE FAMILY" width="1440" height="779">
                             </picture>
                         </div>
@@ -353,8 +353,8 @@
                     <div class="profile_container">
                         <div class="profile_inner">
                             <picture>
-                                <source media="(max-width: 1023px)" data-src="/assets/img/top/profile_bg_sp.webp">
-                                <img class="lazy" draggable="false" src="/assets/img/profile_bg.webp"
+                                <source media="(max-width: 1023px)" data-srcset="/assets/img/profile_bg_sp.webp">
+                                <img class="lazy" draggable="false" data-src="/assets/img/profile_bg.webp"
                                     alt="プロフィール | Profile" width="1440" height="779">
                             </picture>
                             <div class="profile_overlay"></div>
@@ -365,15 +365,75 @@
                                     <p>Profile</p>
                                 </div>
                             </div>
-                            <div class="profile_content"></div>
+                            <div class="profile_content">
+                                <h2>
+                                    <span class="lang-ja">アキヒロジン</span>
+                                    <span class="lang-en">Jin AKIHIRO</span>
+                                    <span>－</span>
+                                    <span class="lang-ja">アキヒロウッドワークス</span>
+                                    <span class="lang-en">Akihiro Woodworks</span>
+                                </h2>
+                                <p>
+                                    <span class="lang-ja">
+                                        鹿児島を拠点に活動する木工作家。直線から曲線へ、曲線から面へ。力強い立体構築で使う人を作品の中へ引きずり込む。 2002
+                                        年の活動開始以来、オーダー家具制作、オリジナルのプロダクト製品の展開、店舗、住宅内装から、インスタレーション作品の発表など、活動の幅を広げ続けている。良い物を作れば、良い物を使う人が増える。それを続けてゆくこと。それこそが、より良い未来へ向けて、僕にできる唯一のことだと信じています。良い物とは何かを探す旅へ、自分のため、あなたのために。
+                                    </span>
+                                    <span class="lang-en">
+                                        A woodwork artist based in Kagoshima. Flowing from straight lines to curves, and
+                                        from curves to surfaces, his powerful three-dimensional structures captivate
+                                        users and draw them into his creations. Since beginning his career in 2002, he
+                                        has expanded his activities to include custom furniture making, original product
+                                        lines, store and residential interiors, and installation art. “I believe that by
+                                        creating good products, more people will want to use them. I feel that
+                                        continuing this is my way of contributing to a better future. It is a journey to
+                                        seek what defines ‘good’—both for me and for you.”
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
                 <!-- //profile -->
+
+                <!-- toc// -->
+                <section class="toc">
+                    <div class="toc_container u-pad">
+                        <div class="toc_title">
+                            <div class="c-title">
+                                <p>目次</p>
+                                <span></span>
+                                <p>Table of Contents</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- //toc -->
             </main>
             <!-- footer -->
             <footer class="c-footer">
-                <div class="c-footer_container"></div>
+                <div class="c-footer_container u-pad">
+                    <div class="c-footer_left">
+                        <p class="c-footer_copyright">©︎ Akihiro Woodworks</p>
+                        <a href="https://akihirowoodworks.com/" class="c-footer_backsite">BACK TO OFFICIAL SITE</a>
+                    </div>
+                    <div class="c-footer_right">
+                        <div class="c-footer_backtotop" data-footer-backtotop>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17.414" height="45.707"
+                                viewBox="0 0 17.414 45.707">
+                                <g id="Group_154" data-name="Group 154" transform="translate(-1391.293 -7925.293)">
+                                    <line id="Line_25" data-name="Line 25" y1="45" transform="translate(1400 7926)"
+                                        fill="none" stroke="#000" stroke-width="1" />
+                                    <line id="Line_26" data-name="Line 26" x1="8" y2="8"
+                                        transform="translate(1392 7926)" fill="none" stroke="#000"
+                                        stroke-linecap="square" stroke-width="1" />
+                                    <line id="Line_27" data-name="Line 27" x2="8" y2="8"
+                                        transform="translate(1400 7926)" fill="none" stroke="#000"
+                                        stroke-linecap="square" stroke-width="1" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </footer>
             <!-- //footer -->
         </div>

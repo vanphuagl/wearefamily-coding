@@ -2,4 +2,58 @@
 ------------------------------------------------------------*/
 
 .c-footer {
+  padding: 200px 0 34px;
+
+  &_container {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  @include maxW(1023px) {
+    padding: 116px 0 16px;
+    &_container {
+      align-items: center;
+    }
+  }
+
+  &_left {
+    display: flex;
+    gap: 33px;
+
+    p,
+    a {
+      font-family: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 1px;
+      letter-spacing: 0.28px;
+    }
+
+    @include maxW(1023px) {
+      flex-direction: column-reverse;
+      gap: 11px;
+
+      p,
+      a {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &_backtotop {
+    cursor: pointer;
+
+    @include maxW(1023px) {
+      svg {
+        width: auto;
+        height: 35px;
+      }
+    }
+  }
 }
