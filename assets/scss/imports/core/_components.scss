@@ -59,7 +59,7 @@
 .c-title {
   width: fit-content;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 15px;
 
   &.--white-cl {
@@ -81,6 +81,7 @@
     width: 1px;
     height: 18px;
     background: $black-cl;
+    transform: translateY(2px);
   }
 
   @include maxW(1023px) {

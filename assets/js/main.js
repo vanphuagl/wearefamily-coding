@@ -205,6 +205,10 @@ const defaultImageSrc = tocImage.getAttribute('data-src');
 const imageCache = {};
 imageCache[defaultImageSrc] = true; // Add default image to cache
 
+let activeItem = null;
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const isMobile = 1023;
+
 const changeImageWithFade = function (newSrc) {
   tocImage.parentNode.classList.add('--fade');
   setTimeout(() => {
@@ -223,40 +227,75 @@ const changeImageWithFade = function (newSrc) {
   }, 0); // 300 transiton 0.3s
 }
 
-// # mouseover li
-tocItems.forEach(item => {
-  item.addEventListener('mouseover', () => {
-    // change image
-    const imageSrc = item.getAttribute('data-toc-img');
-    if (imageCache[imageSrc]) {
-      changeImageWithFade(imageSrc);
-    } else {
-      changeImageWithFade(imageSrc);
-      // save to cache when image loaded
-      tocImage.addEventListener('load', () => {
-        imageCache[imageSrc] = true;
-      }, { once: true });
-    }
-    // set opacity
-    tocItems.forEach(otherItem => {
-      if (otherItem !== item) {
-        otherItem.style.opacity = '0.2';
-      } else {
-        otherItem.style.opacity = '1';
-      }
-    });
+const resetToDefault = function () {
+  changeImageWithFade(defaultImageSrc);
+  tocItems.forEach(item => {
+    item.style.opacity = '1';
+    item.classList.remove('active');
   });
-});
+  activeItem = null;
+}
 
-// # mouseout li
-tocList.addEventListener('mouseout', (e) => {
-  if (!tocList.contains(e.relatedTarget)) {
-    changeImageWithFade(defaultImageSrc);
-    tocItems.forEach(item => {
-      item.style.opacity = '1';
+const handleInteraction = function (item) {
+  // if click on li is active on mobile, reset to default
+  if (window.innerWidth <= isMobile && activeItem === item) {
+    resetToDefault();
+    return;
+  }
+  // change image
+  const imageSrc = item.getAttribute('data-toc-img');
+  if (imageCache[imageSrc]) {
+    changeImageWithFade(imageSrc);
+  } else {
+    changeImageWithFade(imageSrc);
+    // save to cache when image loaded
+    tocImage.addEventListener('load', () => {
+      imageCache[imageSrc] = true;
+    }, { once: true });
+  }
+  // set opacity
+  tocItems.forEach(otherItem => {
+    if (otherItem !== item) {
+      otherItem.style.opacity = '0.2';
+      otherItem.classList.remove('active');
+    } else {
+      otherItem.style.opacity = '1';
+      otherItem.classList.add('active');
+    }
+  });
+  activeItem = item;
+}
+
+// Handling when interacting
+tocItems.forEach(item => {
+  if (window.innerWidth <= isMobile) {
+    // On mobile, using click
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleInteraction(item);
+    });
+  } else {
+    // On dekstop, using hover
+    item.addEventListener('mouseover', () => {
+      handleInteraction(item);
     });
   }
 });
+// Handling when not interacting
+if (window.innerWidth <= isMobile) {
+  // On mobile, click outside of ul to reset
+  document.addEventListener('click', (e) => {
+    if (!tocList.contains(e.target)) {
+      resetToDefault();
+    }
+  });
+} else {
+  tocList.addEventListener('mouseout', (e) => {
+    if (!tocList.contains(e.relatedTarget)) {
+      resetToDefault();
+    }
+  });
+}
 
 // ### ===== DOMCONTENTLOADED ===== ###
 window.addEventListener("DOMContentLoaded", init);
