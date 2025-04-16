@@ -602,6 +602,7 @@
       box-sizing: content-box;
       scrollbar-width: auto;
       -webkit-overflow-scrolling: touch;
+      will-change: transform;
 
       &::-webkit-scrollbar {
         height: 2px;
