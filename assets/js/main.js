@@ -9,6 +9,8 @@ const init = () => {
   initLoading();
   // # init language switch
   initLanguageSwitch();
+  // # batch loading 
+  batchLoadingTimeline()
   // # lazy load
   const ll = new LazyLoad({
     threshold: 0,
@@ -208,7 +210,7 @@ const [header, footer] = [
   document.querySelector("header"),
   document.querySelector("footer"),
 ];
-lenis.on("scroll", ({ }) => {
+lenis.on("scroll", ({}) => {
   const distInView = footer.getBoundingClientRect().top - 100;
   if (distInView < 0) {
     header.classList.add("is-hidden");
@@ -408,6 +410,58 @@ if (document.querySelector("[data-timeline-list]")) {
   });
 }
 
+// batch loading
+const batchLoadingTimeline = function () {
+  const timelineImages = document.querySelectorAll(".timeline img");
+
+  const loadImage = (img) => {
+    const src = img.getAttribute("data-src");
+    if (src) {
+      img.src = src;
+      img.removeAttribute("data-src"); // Delete data-src after loading to avoid reloading
+    }
+  };
+
+  // Preload images from 2007 to 2015
+  timelineImages.forEach((img) => {
+    const yearElement = img
+      .closest(".timeline_items")
+      .querySelector(".timeline_year");
+    const year = parseInt(yearElement.textContent, 10);
+    if (year >= 2007 && year <= 2015) {
+      loadImage(img);
+    }
+  });
+
+  // Intersection Observer to load images from 2016 to 2025 when scrolling near the excerpt section
+  const trigger = document.querySelector(".excerpt");
+  if (trigger) {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timelineImages.forEach((img) => {
+              const yearElement = img
+                .closest(".timeline_items")
+                .querySelector(".timeline_year");
+              const year = parseInt(yearElement.textContent, 10);
+              if (year >= 2016 && year <= 2025) {
+                loadImage(img);
+              }
+            });
+            // Stop viewing after loading is complete
+            observer.unobserve(trigger);
+          }
+        });
+      },
+      {
+        rootMargin: "200px", // Load before trigger appears in viewport 200px
+      }
+    );
+
+    observer.observe(trigger);
+  }
+};
 
 // ### ===== DOMCONTENTLOADED ===== ###
-window.addEventListener("load", init);
+window.addEventListener("DOMContentLoaded", init);
