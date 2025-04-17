@@ -207,7 +207,7 @@ const [header, footer] = [
   document.querySelector("header"),
   document.querySelector("footer"),
 ];
-lenis.on("scroll", ({}) => {
+lenis.on("scroll", ({ }) => {
   const distInView = footer.getBoundingClientRect().top - 100;
   if (distInView < 0) {
     header.classList.add("is-hidden");
@@ -388,19 +388,22 @@ document.querySelectorAll(".timeline_items").forEach((column) => {
 });
 
 // Improved scrollbar functionality
-const timelineList = document.querySelector("[data-timeline-list]");
-const scrollbarThumb = document.querySelector("[data-timeline-thumb]");
-const trackWidth = 100;
-const thumbWidth = 20;
-const maxScroll = timelineList.scrollWidth - timelineList.clientWidth;
-const maxThumbPosition = trackWidth - thumbWidth;
+if (document.querySelector("[data-timeline-list]")) {
+  const timelineList = document.querySelector("[data-timeline-list]");
+  const scrollbarThumb = document.querySelector("[data-timeline-thumb]");
+  const trackWidth = 100;
+  const thumbWidth = 20;
+  const maxScroll = timelineList.scrollWidth - timelineList.clientWidth;
+  const maxThumbPosition = trackWidth - thumbWidth;
 
-timelineList.addEventListener("scroll", () => {
-  const scrollPosition = timelineList.scrollLeft;
-  const scrollRatio = scrollPosition / maxScroll;
-  const thumbPosition = scrollRatio * maxThumbPosition;
-  scrollbarThumb.style.left = `${thumbPosition}px`;
-});
+  timelineList.addEventListener("scroll", () => {
+    const scrollPosition = timelineList.scrollLeft;
+    const scrollRatio = scrollPosition / maxScroll;
+    const thumbPosition = scrollRatio * maxThumbPosition;
+    scrollbarThumb.style.left = `${thumbPosition}px`;
+  });
+}
+
 
 // ### ===== DOMCONTENTLOADED ===== ###
 window.addEventListener("DOMContentLoaded", init);

@@ -12,7 +12,7 @@
   }
 
   @include maxW(1023px) {
-    padding: 116px 0 16px;
+    padding: 116px 0 18px;
     &_container {
       align-items: center;
     }
@@ -37,7 +37,7 @@
 
     @include maxW(1023px) {
       flex-direction: column-reverse;
-      gap: 11px;
+      gap: 15px;
 
       p,
       a {
@@ -48,6 +48,7 @@
 
   &_backtotop {
     cursor: pointer;
+    margin-bottom: 1px;
 
     @include maxW(1023px) {
       svg {
