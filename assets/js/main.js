@@ -61,6 +61,7 @@ const playWithPromise = (player) => {
   });
 };
 const initLoading = async () => {
+  history.scrollRestoration = "manual";
   // Block scroll events
   window.addEventListener("wheel", preventScroll, { passive: false });
   window.addEventListener("touchmove", preventScroll, { passive: false });
@@ -74,7 +75,7 @@ const initLoading = async () => {
     },
     { passive: false }
   );
-  window.scrollTo(0, 0);
+  // window.scrollTo(0, 0);
   // # step 1
   await delay(1000);
   const playerJincup = document.getElementById("e7DApHFhQti1").svgatorPlayer;
@@ -409,4 +410,4 @@ if (document.querySelector("[data-timeline-list]")) {
 
 
 // ### ===== DOMCONTENTLOADED ===== ###
-window.addEventListener("DOMContentLoaded", init);
+window.addEventListener("load", init);
