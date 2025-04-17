@@ -362,38 +362,41 @@ document.querySelectorAll("[data-popup-close]").forEach((button) => {
 });
 
 // ===== timeline =====
-document.querySelectorAll(".timeline_items").forEach((column) => {
-  column.addEventListener("click", () => {
-    const content = column.querySelector(".timeline_content");
+// document.querySelectorAll(".timeline_items").forEach((column) => {
+//   column.addEventListener("click", () => {
+//     const content = column.querySelector(".timeline_content");
 
-    if (column.classList.contains("is-expanded")) {
-      //  close colujmn
-      column.classList.remove("is-expanded");
-      content.classList.remove("is-active");
-    } else {
-      // close all column
-      document.querySelectorAll(".timeline_items").forEach((otherColumn) => {
-        otherColumn.classList.remove("is-expanded");
-        otherColumn
-          .querySelector(".timeline_content")
-          .classList.remove("is-active");
-      });
-      // open column target
-      column.classList.add("is-expanded");
-      setTimeout(() => {
-        content.classList.add("is-active");
-      }, 500);
-    }
-  });
-});
+//     if (column.classList.contains("is-expanded")) {
+//       //  close colujmn
+//       column.classList.remove("is-expanded");
+//       content.classList.remove("is-active");
+//     } else {
+//       // close all column
+//       document.querySelectorAll(".timeline_items").forEach((otherColumn) => {
+//         otherColumn.classList.remove("is-expanded");
+//         otherColumn
+//           .querySelector(".timeline_content")
+//           .classList.remove("is-active");
+//       });
+//       // open column target
+//       column.classList.add("is-expanded");
+//       setTimeout(() => {
+//         content.classList.add("is-active");
+//       }, 500);
+//     }
+//   });
+// });
 
 // Improved scrollbar functionality
 if (document.querySelector("[data-timeline-list]")) {
   const timelineList = document.querySelector("[data-timeline-list]");
   const scrollbarThumb = document.querySelector("[data-timeline-thumb]");
-  const trackWidth = 100;
-  const thumbWidth = 20;
+  const scrollbarTrack = document.querySelector("[data-timeline-track]");
+  const thumbWidth = 100;
   const maxScroll = timelineList.scrollWidth - timelineList.clientWidth;
+
+  // Get the track width dynamically
+  const trackWidth = scrollbarTrack.clientWidth;
   const maxThumbPosition = trackWidth - thumbWidth;
 
   timelineList.addEventListener("scroll", () => {
