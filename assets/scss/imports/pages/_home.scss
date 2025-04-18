@@ -52,7 +52,7 @@
       h1 {
         position: absolute;
         top: 50px;
-        left: 50%;
+        left: 50.5%;
         transform: translateX(-50%);
       }
 
@@ -60,6 +60,7 @@
         h1 {
           top: auto;
           bottom: 25px;
+          left: 50%;
 
           svg {
             width: 18px;
@@ -533,6 +534,11 @@
         max-width: 184px !important;
         width: 45.17vw !important;
         transform: none !important;
+
+        &.is-kido {
+          width: 65vw !important;
+          max-width: 100% !important;
+        }
       }
     }
 
@@ -789,7 +795,6 @@
       flex: 1;
 
       p {
-        font-family: YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "MS PMincho", serif;
         font-size: 1.3rem;
         letter-spacing: 0;
         line-height: 1.5;
@@ -851,6 +856,7 @@
         letter-spacing: -0.5px;
         line-height: 1.47;
         text-align: center;
+        font-feature-settings: "palt" 1;
       }
 
       @include maxW(1023px) {
